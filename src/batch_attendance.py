@@ -4,7 +4,7 @@ import numpy as np
 import face_recognition
 from datetime import datetime
 
-from AttendanceProject import load_images_from_folder, find_encodings, mark_attendance
+from src.AttendanceProject import load_images_from_folder, find_encodings, mark_attendance
 
 def process_image_folder(input_folder, known_images_folder):
     """

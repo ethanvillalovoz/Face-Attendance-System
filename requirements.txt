@@ -1,3 +1,6 @@
 opencv-python
 numpy
 face_recognition
+fastapi
+uvicorn
+python-multipart
