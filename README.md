@@ -58,13 +58,15 @@ The system uses a React frontend, FastAPI backend, and a SQLite database for rob
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/face-attendance-system.git
-cd face-attendance-system
+git clone https://github.com/ethanvillalovoz/FaceTrack-Face-Attendance-System.git
+cd FaceTrack-Face-Attendance-System
 ```
 
 ### 2. Set up the backend
 
 ```bash
+conda create -n FaceTrack python=3.13
+conda activate FaceTrack
 pip install -r requirements.txt
 uvicorn backend.fastapi_app:app --reload
 ```
