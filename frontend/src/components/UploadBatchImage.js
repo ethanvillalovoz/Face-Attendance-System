@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 
+/**
+ * UploadBatchImage
+ * Allows the user to upload a batch image for attendance processing.
+ * Shows a preview, handles loading state, and displays feedback.
+ */
 function UploadBatchImage() {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Handle file selection and preview
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
     setFile(selected);
@@ -13,6 +19,7 @@ function UploadBatchImage() {
     setMessage("");
   };
 
+  // Handle file upload to backend
   const handleUpload = async () => {
     if (!file) {
       setMessage("Please select a file.");
@@ -36,18 +43,24 @@ function UploadBatchImage() {
   };
 
   return (
-    <div style={{ marginBottom: "2rem" }}>
+    <div style={{ marginBottom: 0 }}>
       <h3>Upload Batch Image</h3>
       <input type="file" onChange={handleFileChange} />
       {preview && (
         <div>
-          <img src={preview} alt="preview" style={{ width: 100, margin: "1rem 0" }} />
+          <img
+            src={preview}
+            alt={file ? `Preview of ${file.name}` : "preview"}
+            style={{ width: 100, margin: "1rem 0" }}
+          />
         </div>
       )}
       <button onClick={handleUpload} disabled={loading}>
         {loading ? "Uploading..." : "Upload"}
       </button>
-      <div style={{ color: message.includes("failed") ? "red" : "green" }}>{message}</div>
+      <div style={{ color: message.includes("failed") ? "red" : "green" }}>
+        {message}
+      </div>
     </div>
   );
 }
