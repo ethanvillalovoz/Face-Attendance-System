@@ -18,8 +18,8 @@ def draw_face_rectangle(image, face_location, color=(255, 0, 255), thickness=2):
 
 def main():
     # Load and prepare images
-    img_Elon_Musk = load_and_prepare_image("image_basics_data/Elon_Musk.jpeg")
-    img_Elon_Musk_test = load_and_prepare_image("image_basics_data/Elon_Musk_Test.jpeg")
+    img_Elon_Musk = load_and_prepare_image("data/image_basics_data/Elon_Musk.jpeg")
+    img_Elon_Musk_test = load_and_prepare_image("data/image_basics_data/Elon_Musk_Test.jpeg")
 
     # Detect face locations and encodings
     face_location = face_recognition.face_locations(img_Elon_Musk)[0]
