@@ -7,3 +7,5 @@ Upload Known Face
 
 cd frontend
 npm start
+
+FaceTrack: Smart Face Recognition Attendance System
