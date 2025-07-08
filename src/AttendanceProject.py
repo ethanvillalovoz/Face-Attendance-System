@@ -1,13 +1,26 @@
+"""
+AttendanceProject.py
+Core logic for loading images, encoding faces, and marking attendance using face recognition.
+Can be run as a script for webcam-based attendance.
+"""
+
 from datetime import datetime
+import os
 import cv2
 import numpy as np
 import face_recognition
-import os
+from typing import List, Tuple
 
-def load_images_from_folder(folder_path):
+# === Constants ===
+DEFAULT_ATTENDANCE_FILE = 'data/Attendance.csv'
+
+def load_images_from_folder(folder_path: str) -> Tuple[List[np.ndarray], List[str]]:
     """
     Loads images and class names from the specified folder.
-    Returns a tuple (images, class_names).
+    Args:
+        folder_path (str): Path to the folder containing images.
+    Returns:
+        Tuple[List[np.ndarray], List[str]]: List of images and corresponding class names.
     """
     images = []
     class_names = []
@@ -21,9 +34,13 @@ def load_images_from_folder(folder_path):
     print("Class names:", class_names)
     return images, class_names
 
-def find_encodings(images):
+def find_encodings(images: List[np.ndarray]) -> List[np.ndarray]:
     """
     Finds face encodings for a list of images.
+    Args:
+        images (List[np.ndarray]): List of images.
+    Returns:
+        List[np.ndarray]: List of face encodings.
     """
     encode_list = []
     for img in images:
@@ -33,9 +50,12 @@ def find_encodings(images):
             encode_list.append(encodings[0])
     return encode_list
 
-def mark_attendance(name, attendance_file='data/Attendance.csv'):
+def mark_attendance(name: str, attendance_file: str = DEFAULT_ATTENDANCE_FILE) -> None:
     """
     Marks attendance for the given name if not already present.
+    Args:
+        name (str): Name to mark attendance for.
+        attendance_file (str): Path to the attendance CSV file.
     """
     with open(attendance_file, 'r+') as f:
         lines = f.readlines()
@@ -46,6 +66,10 @@ def mark_attendance(name, attendance_file='data/Attendance.csv'):
             f.writelines(f'\n{name},{dt_string}')
 
 def main():
+    """
+    Main function for webcam-based face attendance.
+    Loads known faces, starts webcam, and marks attendance for recognized faces.
+    """
     path = "data/image_attendance_data"
     images, class_names = load_images_from_folder(path)
     encode_list_known = find_encodings(images)

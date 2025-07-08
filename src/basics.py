@@ -1,36 +1,61 @@
+"""
+basics.py
+Demonstrates basic face recognition: loading images, detecting faces, encoding, comparing, and visualizing results.
+"""
+
 import cv2
 import numpy as np
 import face_recognition
 
-def load_and_prepare_image(image_path):
+def load_and_prepare_image(image_path: str) -> np.ndarray:
     """
     Loads an image file and converts it from BGR to RGB.
+    Args:
+        image_path (str): Path to the image file.
+    Returns:
+        np.ndarray: The loaded and converted image.
     """
     img = face_recognition.load_image_file(image_path)
     return cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-def draw_face_rectangle(image, face_location, color=(255, 0, 255), thickness=2):
+def draw_face_rectangle(image: np.ndarray, face_location: tuple, color=(255, 0, 255), thickness=2) -> None:
     """
     Draws a rectangle around the detected face.
+    Args:
+        image (np.ndarray): The image to draw on.
+        face_location (tuple): (top, right, bottom, left) coordinates.
+        color (tuple): Rectangle color in BGR.
+        thickness (int): Rectangle thickness.
     """
     top, right, bottom, left = face_location
     cv2.rectangle(image, (left, top), (right, bottom), color, thickness)
 
-def main():
+def main() -> None:
+    """
+    Loads two images, detects faces, compares them, and visualizes the result.
+    """
     # Load and prepare images
-    img_Elon_Musk = load_and_prepare_image("data/image_basics_data/Elon_Musk.jpeg")
-    img_Elon_Musk_test = load_and_prepare_image("data/image_basics_data/Elon_Musk_Test.jpeg")
+    img_elon = load_and_prepare_image("data/image_basics_data/Elon_Musk.jpeg")
+    img_elon_test = load_and_prepare_image("data/image_basics_data/Elon_Musk_Test.jpeg")
 
     # Detect face locations and encodings
-    face_location = face_recognition.face_locations(img_Elon_Musk)[0]
-    face_encoding = face_recognition.face_encodings(img_Elon_Musk)[0]
+    try:
+        face_location = face_recognition.face_locations(img_elon)[0]
+        face_encoding = face_recognition.face_encodings(img_elon)[0]
+    except IndexError:
+        print("No face found in Elon_Musk.jpeg")
+        return
 
-    face_location_test = face_recognition.face_locations(img_Elon_Musk_test)[0]
-    face_encoding_test = face_recognition.face_encodings(img_Elon_Musk_test)[0]
+    try:
+        face_location_test = face_recognition.face_locations(img_elon_test)[0]
+        face_encoding_test = face_recognition.face_encodings(img_elon_test)[0]
+    except IndexError:
+        print("No face found in Elon_Musk_Test.jpeg")
+        return
 
     # Draw rectangles around faces
-    draw_face_rectangle(img_Elon_Musk, face_location)
-    draw_face_rectangle(img_Elon_Musk_test, face_location_test)
+    draw_face_rectangle(img_elon, face_location)
+    draw_face_rectangle(img_elon_test, face_location_test)
 
     # Compare faces and calculate distance
     results = face_recognition.compare_faces([face_encoding], face_encoding_test)
@@ -41,7 +66,7 @@ def main():
 
     # Annotate test image with results
     cv2.putText(
-        img_Elon_Musk_test,
+        img_elon_test,
         f"Match: {results[0]} - Distance: {face_distance[0]:.2f}",
         (50, 50),
         cv2.FONT_HERSHEY_SIMPLEX,
@@ -51,8 +76,8 @@ def main():
     )
 
     # Display images
-    cv2.imshow("Elon Musk", img_Elon_Musk)
-    cv2.imshow("Elon Musk Test", img_Elon_Musk_test)
+    cv2.imshow("Elon Musk", img_elon)
+    cv2.imshow("Elon Musk Test", img_elon_test)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
