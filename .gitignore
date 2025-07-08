@@ -1,5 +1,6 @@
 # Local folders and files that should not be tracked by git in local repo.
 data/lfw/archive/
+data/lfw/*.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
