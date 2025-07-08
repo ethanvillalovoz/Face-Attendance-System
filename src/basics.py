@@ -24,6 +24,18 @@ cv2.rectangle(img_Elon_Musk_test,
               (255, 0, 255), 
               2)
 
+results = face_recognition.compare_faces([face_encodings], face_encodings_test)
+face_distance = face_recognition.face_distance([face_encodings], face_encodings_test)
+print("Face distance: ", face_distance)
+print("Is the test image a match? ", results[0])
+
+cv2.putText(img_Elon_Musk_test, 
+            f"Match: {results[0]} - Distance: {face_distance[0]:.2f}", 
+            (50, 50), 
+            cv2.FONT_HERSHEY_SIMPLEX, 
+            1, 
+            (0, 0, 255), 
+            2)
 cv2.imshow("Elon Musk", img_Elon_Musk)
 cv2.imshow("Elon Musk Test", img_Elon_Musk_test)
 cv2.waitKey(0)
