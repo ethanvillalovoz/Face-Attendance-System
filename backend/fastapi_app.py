@@ -6,6 +6,7 @@ import shutil
 
 # Import your batch processing logic
 from src.batch_attendance import process_image_folder
+from backend.database.attendance_db import init_db, get_attendance_records
 
 app = FastAPI()
 
@@ -23,6 +24,8 @@ ATTENDANCE_FILE = "data/Attendance.csv"
 
 os.makedirs(KNOWN_DIR, exist_ok=True)
 os.makedirs(BATCH_DIR, exist_ok=True)
+
+init_db()
 
 @app.get("/")
 def read_root():
@@ -49,6 +52,5 @@ def process_batch():
 
 @app.get("/attendance/")
 def get_attendance():
-    if not os.path.exists(ATTENDANCE_FILE):
-        return JSONResponse(content={"error": "Attendance file not found."}, status_code=404)
-    return FileResponse(ATTENDANCE_FILE, media_type='text/csv', filename="Attendance.csv")
+    records = get_attendance_records()
+    return {"attendance": [{"name": name, "timestamp": timestamp} for name, timestamp in records]}

@@ -4,7 +4,8 @@ import numpy as np
 import face_recognition
 from datetime import datetime
 
-from src.AttendanceProject import load_images_from_folder, find_encodings, mark_attendance
+from src.AttendanceProject import load_images_from_folder, find_encodings
+from backend.database.attendance_db import mark_attendance_db
 
 def process_image_folder(input_folder, known_images_folder):
     """
@@ -33,7 +34,7 @@ def process_image_folder(input_folder, known_images_folder):
             if match_index is not None and matches[match_index]:
                 name = class_names[match_index]
                 print(f"Recognized {name} in {filename}")
-                mark_attendance(name)
+                mark_attendance_db(name)  # <-- Use DB function here
             else:
                 print(f"Unknown face detected in {filename}")
 

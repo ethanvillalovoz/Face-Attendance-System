@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 
 function DownloadAttendance() {
-  const handleDownload = () => {
-    window.open("http://127.0.0.1:8000/attendance/", "_blank");
+  const [attendance, setAttendance] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchAttendance = async () => {
+    setLoading(true);
+    const res = await fetch("http://127.0.0.1:8000/attendance/");
+    const data = await res.json();
+    setAttendance(data.attendance || []);
+    setLoading(false);
   };
 
   return (
     <div>
-      <h3>Download Attendance</h3>
-      <button onClick={handleDownload}>Download Attendance CSV</button>
+      <h3>Attendance Records</h3>
+      <button onClick={fetchAttendance}>View Attendance</button>
+      {loading && <div>Loading...</div>}
+      <ul>
+        {attendance.map((record, idx) => (
+          <li key={idx}>
+            {record.name} - {record.timestamp}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
