@@ -1,3 +1,6 @@
+# Local folders and files that should not be tracked by git in local repo.
+data/lfw/archive/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
