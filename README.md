@@ -6,11 +6,23 @@
 ![React](https://img.shields.io/badge/frontend-React-blue)
 ![FastAPI](https://img.shields.io/badge/backend-FastAPI-green)
 
----
+![CI/CD](https://img.shields.io/github/actions/workflow/status/ethanvillalovoz/FaceTrack-Face-Attendance-System/ci.yml?branch=main&label=CI%2FCD)
+
 
 ## 🚀 Introduction
 
 **FaceTrack** is a modern, full-stack face recognition attendance system. It enables organizations to automate attendance logging using face recognition, providing a seamless and contactless experience.
+
+---
+
+## 🔄 CI/CD Integration
+
+FaceTrack now features automated CI/CD using GitHub Actions:
+
+- **Continuous Integration (CI):** Automatically installs dependencies and runs tests for both backend and frontend on every push or pull request to `main`.
+- **Continuous Deployment (CD):** Ready for deployment automation. Customize the workflow for your preferred platform.
+
+See `.github/workflows/ci.yml` and `.github/workflows/cd.yml` for details.
 
 ---
 
