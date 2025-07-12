@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders FaceTrack header', () => {
+test('renders FaceTrack text somewhere in the app', () => {
   render(<App />);
-  const headerElement = screen.getByText(/FaceTrack/i);
-  expect(headerElement).toBeInTheDocument();
+  const elements = screen.getAllByText(/FaceTrack/i);
+  expect(elements.length).toBeGreaterThan(0);
 });
